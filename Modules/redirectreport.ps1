@@ -3,7 +3,11 @@ $redirectreport = Generate-ReportHeader "redirectreport.png" "$l_redir_header "
 $cells=@("$l_redir_mbx","$l_redir_rulename","$l_redir_type","$l_redir_targetaddr","$l_redir_active")
 $redirectreport += Generate-HTMLTable "$l_redir_header2" $cells
 
-$rules = Get-Mailbox -resultsize unlimited | ForEach-Object {Get-InboxRule -Mailbox $PSItem.Id} | where {$_.forwardto -or $_.redirectto}
+[array]$rules = @()
+ForEach ($mbx in $allmbx) 
+    {
+        $Rules += (Get-InboxRule -Mailbox $mbx.Distinguishedname).where({$_.forwardto -or $_.redirectto;})
+    } 
 foreach ($rule in $rules)
 	{
 		$mbxname = $rule.mailboxownerid.name
