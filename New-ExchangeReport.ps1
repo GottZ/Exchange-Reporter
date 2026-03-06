@@ -1,6 +1,6 @@
 #Requires -RunAsAdministrator
 #--------------------------------------------------------------------------------------
-# Exchange Reporter 3.13
+# Exchange Reporter 3.14
 # for Exchange Server 2010/2013/2016/2019
 # www.frankysweb.de
 #
@@ -18,7 +18,7 @@ Param(
 #Konsole Header
 #--------------------------------------------------------------------------------------
 
-$reporterversion = "3.13"
+$reporterversion = "3.14"
 
 clear-host
 if ($ExchangeVersion)
@@ -613,5 +613,6 @@ if ($errorlog -match "yes")
 		$logtime = get-date
 		"-End--- $logtime ----------------------------------------------------------------------------------" | add-content "$installpath\ErrorLog.txt"
 	}
+
 
 $host.ui.RawUI.WindowTitle = $otitle
