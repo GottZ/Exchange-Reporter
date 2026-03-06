@@ -12,7 +12,7 @@ foreach ($database in $databases)
 		$dbserver = $database.server
 		$dbsize = $database.DatabaseSize
 		$dbFreeSpace = $database.AvailableNewMailboxSpace
-		$pf = (Get-MailboxDatabase "$database" | get-mailbox -ResultSize Unlimited).count
+		$pf = (Get-Mailbox -Database $database.Name -ResultSize Unlimited).count
 		$lastbackup = $database.LastFullBackup
 		if ($lastbackup)
 			{
