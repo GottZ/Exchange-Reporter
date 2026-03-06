@@ -50,7 +50,7 @@ write-host "
 
 ------------------------------------------------------------------------------------------
 "
-#Prüfen ob PowerShell 4.0 vorhanden
+#Prï¿½fen ob PowerShell 4.0 vorhanden
 #--------------------------------------------------------------------------------------
 
 write-host " Checking Powershell Version:" -nonewline
@@ -245,25 +245,26 @@ $origpos.X = 70
 		}
 	if (!$emsversion)
 		{
+			$emsversion = "2019"
 			$host.UI.RawUI.CursorPosition = $origpos
-			write-host "Error (EMS not found)" -foregroundcolor red
-			exit 0
-			write-host ""
+			write-host "Warning (EMS not found, defaulting to Exchange 2019)" -foregroundcolor yellow
+			if ($errorlog -match "yes")
+				{
+					"EMS version not found - defaulting to Exchange 2019" | add-content "$installpath\ErrorLog.txt"
+				}
 		}
 	if ($emsversion -notmatch "2010" -and $emsversion -notmatch "2013" -and $emsversion -notmatch "2016" -and $emsversion -notmatch "2019")
 		{
+			$emsversion = "2019"
 			$host.UI.RawUI.CursorPosition = $origpos
-			write-host "Error (Wrong EMS Version)" -foregroundcolor red
-		if ($errorlog -match "yes")
-			{
-				
-				"Wrong EMS Version" | add-content "$installpath\ErrorLog.txt"
-			}
-			exit 0
-			write-host ""
+			write-host "Warning (unknown version, defaulting to Exchange 2019)" -foregroundcolor yellow
+			if ($errorlog -match "yes")
+				{
+					"Wrong EMS Version - defaulting to Exchange 2019" | add-content "$installpath\ErrorLog.txt"
+				}
 		}
 
-#Temporäres Verzeichnis erstellen
+#Temporï¿½res Verzeichnis erstellen
 #--------------------------------------------------------------------------------------
 
 write-host " Generating temp. Directory:" -nonewline
@@ -315,7 +316,7 @@ Catch
 		write-host ""
  }
  
-#Häufig genutzte Variablen
+#Hï¿½ufig genutzte Variablen
 #--------------------------------------------------------------------------------------
 write-host " Loading global Variables:" -nonewline
 $origpos = $host.UI.RawUI.CursorPosition
@@ -575,7 +576,7 @@ if ($FTPUpload -match "yes")
 			}		
 	}
 
-# Aufräumen
+# Aufrï¿½umen
 #--------------------------------------------------------------------------------------
 if ($CleanTMPFolder -match "yes")
 	{
