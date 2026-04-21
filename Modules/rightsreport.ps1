@@ -1,5 +1,7 @@
 $rightsreport = Generate-ReportHeader "rightsreport.png" "$l_perm_header"
 
+$selfSid = [System.Security.Principal.SecurityIdentifier]"S-1-5-10"
+
 $cells=@("$l_perm_mbx","$l_perm_database","$l_perm_user","$l_perm_permission")
 $rightsreport += Generate-HTMLTable "$l_perm_header2" $cells
 
@@ -32,7 +34,7 @@ foreach ($mailbox in $allmbx)
 						$rightsreport += New-HTMLTableLine $cells
 					}
 			}
-		$sendas = Get-ADPermission $mailbox.DistinguishedName | where {($_.ExtendedRights -like "*Send-As*") -and ($_.IsInherited -eq $false) -and -not ($_.User -like "NT AUTHORITY\SELF") -and -not ($_.User -like "NT-AUTORITÄT\SELBST")} 
+		$sendas = Get-ADPermission $mailbox.DistinguishedName | where {($_.ExtendedRights -like "*Send-As*") -and ($_.IsInherited -eq $false) -and ($_.User.SecurityIdentifier -ne $selfSid)}
 		if ($sendas)
 			{
 				foreach ($right in $sendas)
